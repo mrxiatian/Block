@@ -71,6 +71,7 @@ type Getaddressinfo struct {
 	Hdmasterfingerprint string
 	Labels	[]string
 	Embedded Embedded
+	Embedded_ map[string]interface{}
 }
 type Embedded struct {
 
@@ -81,6 +82,32 @@ type Embedded struct {
 	Pubkey string
 	Address string
 	ScriptPubKey string
-
-
 }
+//==============GetBalance==========//
+type Getbalance struct {
+	N     float64
+}
+//============end GetBalance=========//
+//==============begin:getbalances======//
+type Getbalances struct {
+	Mine Mine
+	Mine_  map[string]interface{}
+	Watchonly Watchonly
+	Watchonly_ map[string]interface{}
+}
+type Mine struct {
+	Trusted float64
+	Untrusted_pending float64
+	Immature float64
+	Used float64
+}
+type Watchonly struct {
+	Trusted float64
+	Untrusted_pending float64
+	Immature float64
+}
+//========end: getbalances========//
+
+
+
+

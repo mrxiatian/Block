@@ -2,6 +2,7 @@ package main
 
 import (
 	"bitcoin/utils"
+	"fmt"
 )
 
 func main() {
@@ -26,7 +27,10 @@ func main() {
 	//str := "000000000000000000055e22b020acc7481293900258dbac75459c9332a93fc7"
 	//fmt.Println(str[0])
 
-	utils.GetTest()
+	//utils.GetTest()
+	bc :=utils.GetBC()
+	a :=bc.AddMultisigAddress()
+	fmt.Println(a)
 
 }
 

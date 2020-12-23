@@ -119,6 +119,14 @@ type Wallet interface {
 	GetAddressesByLabel(label string)entity.Getaddressesbylabel
 	//===============获取地址信息============//
 	GetAddressinfo(address string)entity.Getaddressinfo
+	//==================返回这个钱包收到的比特币总数==========//
+	GetBalance()entity.Getbalance
+	//===========返回一个BTC中所有余额的对象。============//
+	GetBalances()entity.Getbalances
+	//=========返回新地址============//
+	GetNewAddress()
+	//===========获取原始更改地址========//
+	GetRawChangeAddress()
 }
 
 
