@@ -26,10 +26,11 @@ func main() {
 	//
 	//str := "000000000000000000055e22b020acc7481293900258dbac75459c9332a93fc7"
 	//fmt.Println(str[0])
-
-	//utils.GetTest()
+	//
+	utils.GetTest()
+	return
 	bc :=utils.GetBC()
-	a :=bc.AddMultisigAddress()
+	a :=bc.GetAddressesByLabel("xiatian")
 	fmt.Println(a)
 
 }

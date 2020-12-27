@@ -508,8 +508,8 @@ func (bc btcSer) Abortrescan() bool {
 }
 
 //==========添加多重账户地址===========
-func (bc btcSer) AddMultisigAddress(nrequried int64,keys []string)entity.AddMultisgAddressInfo {
-	paramsSlice := []interface{}{nrequried,keys}
+func (bc btcSer) AddMultisigAddress(nrequried int64, keys []string) entity.AddMultisgAddressInfo {
+	paramsSlice := []interface{}{nrequried, keys}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := PrepareJSON(ADDMULTISIGADDRESS, paramsSlice)
 
@@ -524,6 +524,7 @@ func (bc btcSer) AddMultisigAddress(nrequried int64,keys []string)entity.AddMult
 	}
 	return multisigAddress
 }
+
 //=============转至备份钱包==========///
 //func (bc btcSer) BackUpWallet(destination string)entity.UpWallet {
 //	paramsSlice := []interface{}{destination}
@@ -533,15 +534,15 @@ func (bc btcSer) AddMultisigAddress(nrequried int64,keys []string)entity.AddMult
 //	//bitcoin Core 响应的结果
 //	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
 //
-//	res, ok := rpcResult.Data.Result.()
+//	res, ok := rpcResult.Data.Result.(null)
 //	if ok {
-//		return null
+//		return res
 //	}
 //
 //	return -1
 //}
 //============查询撞的费用==========//
-func (bc btcSer) BumpFee(txId string)entity.Bumpfee {
+func (bc btcSer) BumpFee(txId string) entity.Bumpfee {
 	paramsSlice := []interface{}{txId}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := PrepareJSON(BUMPFEE, paramsSlice)
@@ -560,15 +561,16 @@ func (bc btcSer) BumpFee(txId string)entity.Bumpfee {
 	}
 	return bumpfeeIfo
 }
+
 //=============创建钱包==============//
-func (bc btcSer) CreateWallet(wallet_name string,passphrase string)entity.Createwallet {
-	paramsSlice := []interface{}{wallet_name,passphrase}
+func (bc btcSer) CreateWallet(wallet_name string, passphrase string) entity.Createwallet {
+	paramsSlice := []interface{}{wallet_name, passphrase}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := PrepareJSON(CREATEWALLET, paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
-		createWallet := entity.Createwallet{}
+	createWallet := entity.Createwallet{}
 	res, ok := rpcResult.Data.Result.(map[string]interface{})
 	if ok {
 		createWallet.Name = res["name"].(string)
@@ -576,8 +578,9 @@ func (bc btcSer) CreateWallet(wallet_name string,passphrase string)entity.Create
 	}
 	return createWallet
 }
+
 //==============转储私钥============//
-func (bc btcSer) DumpPrivkey(adress string)string{
+func (bc btcSer) DumpPrivkey(adress string) string {
 	paramsSlice := []interface{}{adress}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := PrepareJSON(DUMPPRIVKEY, paramsSlice)
@@ -591,64 +594,69 @@ func (bc btcSer) DumpPrivkey(adress string)string{
 	}
 	return ""
 }
+
 //==============转储钱包============//
-func (bc btcSer) DumpWallet(filename string)entity.Dumpwallet {
+func (bc btcSer) DumpWallet(filename string) string {
 	paramsSlice := []interface{}{filename}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := PrepareJSON("dumpwallet", paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
-	dumpWallet := entity.Dumpwallet{}
-	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	res, ok := rpcResult.Data.Result.(string)
 	if ok {
-		dumpWallet.Filename = res["filename"].(string)
+		return res
 
 	}
-	return dumpWallet
+	return ""
 }
+
 //===============加密钱包============//
-func (bc btcSer) EncyptWallet(passphrase string)entity.EncyptWallet {
+func (bc btcSer) EncyptWallet(passphrase string) string {
 	paramsSlice := []interface{}{passphrase}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := PrepareJSON("encryptwallet", paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
-	encryptWallet := entity.EncyptWallet{}
-	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	res, ok := rpcResult.Data.Result.(string)
 	if ok {
-		encryptWallet.Passphrase = res["str"].(string)
+		return res
 
 	}
-	return encryptWallet
+	return ""
 }
-//===============通过标签获取地址============//
-func (bc btcSer) GetAddressesByLabel(label string)entity.Getaddressesbylabel {
-	paramsSlice := []interface{}{label}
-	//RPC通信标椎格JSON式数据
-	rpcNormJson := PrepareJSON("getaddressesbylabel", paramsSlice)
 
-	//bitcoin Core 响应的结果
-	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
-	getAddressesByLabel := entity.Getaddressesbylabel{}
-	res, ok := rpcResult.Data.Result.(map[string]interface{})
-	if ok {
-		getAddressesByLabel.Address = res["address"].(string)
-		getAddressesByLabel.Purpose = res["purpose"].(string)
+//===============通过标签获取地址============//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+//func (bc btcSer) GetAddressesByLabel(label string) entity.Label {
+//	paramsSlice := []interface{}{label}
+//	//RPC通信标椎格JSON式数据
+//	rpcNormJson := PrepareJSON("getaddressesbylabel", paramsSlice)
+//
+//	//bitcoin Core 响应的结果
+//	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
+//	getAddressesByLabel := entity.Label{}
+//	res, ok := rpcResult.Data.Result.(map[string]interface{})
+//	if ok {
+//		getAddressesByLabel.Address_,ok =res["Address"].(map[string]interface{})
+//		if ok {
+//
+//		}
+//
+//
+//	}
+//	return getAddressesByLabel
+//}
 
-	}
-	return getAddressesByLabel
-}
 //===============获取地址信息============//
-func (bc btcSer) GetAddressinfo(address string)entity.Getaddressinfo{
+func (bc btcSer) GetAddressInfo(address string) entity.AddressInfo {
 	paramsSlice := []interface{}{address}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := PrepareJSON("getaddressinfo", paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
-	getAddressInfo := entity.Getaddressinfo{}
+	getAddressInfo := entity.AddressInfo{}
 	res, ok := rpcResult.Data.Result.(map[string]interface{})
 	if ok {
 		getAddressInfo.Address = res["address"].(string)
@@ -659,21 +667,20 @@ func (bc btcSer) GetAddressinfo(address string)entity.Getaddressinfo{
 		getAddressInfo.Iswatchonly = res["iswatchonly"].(bool)
 		getAddressInfo.Isscript = res["isscript"].(bool)
 		getAddressInfo.Iswitness = res["iswitness"].(bool)
-		getAddressInfo.Script = res["script"].(string)
-		getAddressInfo.Hex = res["hex"].(string)
+		//getAddressInfo.Hex = res["hex"].(nil)
 		getAddressInfo.Pubkey = res["pubkey"].(string)
 		getAddressInfo.Ischange = res["ischange"].(bool)
-		getAddressInfo.Timestamp = res["timestamp"].(int64)
-		getAddressInfo.Hdkeypath = res["hdkeypath"].(string)
+		getAddressInfo.Timestamp = res["timestamp"].(float64)
+		//getAddressInfo.Hdkeypath = res["hdkeypath"].(string)
 		getAddressInfo.Hdseedid = res["hdseedid"].(string)
 		getAddressInfo.Hdmasterfingerprint = res["hdmasterfingerprint"].(string)
-		getAddressInfo.Labels = res["labels"].([]string)
+		getAddressInfo.Labels_ = res["labels"].([]interface{})
 
 		getAddressInfo.Embedded_, ok = res["Embedded"].(map[string]interface{})
 		if ok {
 			getAddressInfo.Embedded.Isscript = res["isscript"].(bool)
 			getAddressInfo.Embedded.Iswitness = res["iswitness"].(bool)
-			getAddressInfo.Embedded.Witness_version = res["witness_version"].(int64)
+			getAddressInfo.Embedded.Witness_version = res["witness_version"].(float64)
 			getAddressInfo.Embedded.Witness_program = res["witness_program"].(string)
 			getAddressInfo.Embedded.Pubkey = res["pubkey"].(string)
 			getAddressInfo.Embedded.Address = res["address"].(string)
@@ -683,41 +690,42 @@ func (bc btcSer) GetAddressinfo(address string)entity.Getaddressinfo{
 	}
 	return getAddressInfo
 }
+
 //==================返回这个钱包收到的比特币总数==========//
-func (bc btcSer) GetBalance()entity.Getbalance{
+func (bc btcSer) GetBalance() float64 {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := PrepareJSON(ABORTRESCAN, paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
-	getBalance := entity.Getbalance{}
-	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	res, ok := rpcResult.Data.Result.(float64)
 	if ok {
-		getBalance.N = res["n"].(float64)
+		return res
 	}
 
-	return getBalance
+	return -1
 }
+
 //===========返回一个BTC中所有余额的对象。============//
-func (bc btcSer) GetBalances()entity.Getbalances{
+func (bc btcSer) GetBalances() entity.Balances {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := PrepareJSON(ABORTRESCAN, paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
-	getBalances := entity.Getbalances{}
+	getBalances := entity.Balances{}
 	res, ok := rpcResult.Data.Result.(map[string]interface{})
 	if ok {
-		getBalances.Mine_, ok = res["Mine"].(map[string]interface{})
+		getBalances.Mine_, ok = res["Mine"].(map[float64]interface{})
 		if ok {
 			getBalances.Mine.Trusted = res["trusted"].(float64)
 			getBalances.Mine.Untrusted_pending = res["untrusted_pending"].(float64)
 			getBalances.Mine.Immature = res["immature"].(float64)
 			getBalances.Mine.Used = res["used"].(float64)
 		}
-		getBalances.Watchonly_, ok = res["Watchonly"].(map[string]interface{})
+		getBalances.Watchonly_, ok = res["Watchonly"].(map[float64]interface{})
 		if ok {
 			getBalances.Mine.Trusted = res["trusted"].(float64)
 			getBalances.Mine.Untrusted_pending = res["untrusted_pending"].(float64)
@@ -727,8 +735,9 @@ func (bc btcSer) GetBalances()entity.Getbalances{
 
 	return getBalances
 }
+
 //=========返回新地址============//
-func (bc btcSer) GetNewAddress()string{
+func (bc btcSer) GetNewAddress() string {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := PrepareJSON(GETNEWADDRESS, paramsSlice)
@@ -743,4 +752,132 @@ func (bc btcSer) GetNewAddress()string{
 
 	return ""
 }
+
 //===========获取原始更改地址========//
+func (bc btcSer) GetRawChangeAddress() string {
+	paramsSlice := []interface{}{}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := PrepareJSON(GETRAWCHANGEADDRESS, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	res, ok := rpcResult.Data.Result.(string)
+	if ok {
+		return res
+	}
+
+	return ""
+}
+
+//========返回给定地址接收到的总金额。==========
+func (bc btcSer) GetReceivedByAddress(address string) float64 {
+	paramsSlice := []interface{}{address}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := PrepareJSON(GETRECEIVEDBYADDRESS, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	res, ok := rpcResult.Data.Result.(float64)
+	if ok {
+		return res
+	}
+
+	return -1
+}
+//==========返回收到标签==========
+func (bc btcSer) GetReceivedByLabel(label string) float64 {
+	paramsSlice := []interface{}{label}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := PrepareJSON(GETRECEIVEDBYLABEL, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	res, ok := rpcResult.Data.Result.(float64)
+	if ok {
+		return res
+	}
+
+	return -1
+}
+//===========返回有未经证实的平衡的比特币===//
+func (bc btcSer) GetUnconfirmedBalance() float64 {
+	paramsSlice := []interface{}{}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := PrepareJSON(GETRECEIVEDBYLABEL, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	res, ok := rpcResult.Data.Result.(float64)
+	if ok {
+		return res
+	}
+
+	return -1
+}
+//========返回钱包信息==========//
+func (bc btcSer) GetWalletInfo()entity.WalletInfo {
+	paramsSlice := []interface{}{}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := PrepareJSON(GETWALLETINFO, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
+	getWallentInfo := entity.WalletInfo{}
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		getWallentInfo.Walletname = res["walletname"].(string)
+		getWallentInfo.Walletversion = res["walletversion"].(float64)
+		getWallentInfo.Balance = res["balance"].(float64)
+		getWallentInfo.Unconfirmed_balance = res["unconfirmed_balance"].(float64)
+		getWallentInfo.Immature_balance = res["immature_balance"].(float64)
+		getWallentInfo.Txcount = res["txcount"].(float64)
+		getWallentInfo.Keypoololdest = res["keypoololdest"].(float64)
+		getWallentInfo.Keypoolsize = res["keypoolsize"].(float64)
+		getWallentInfo.Hdseedid = res["hdseedid"].(string)
+		getWallentInfo.Keypoolsize_hd_internal = res["keypoolsize_hd_internal"].(float64)
+		getWallentInfo.Paytxfee = res["paytxfee"].(float64)
+		getWallentInfo.Private_keys_enabled = res["private_keys_enabled"].(bool)
+		getWallentInfo.Avoid_reuse = res["avoid_reuse"].(bool)
+		getWallentInfo.Scanning = res["scanning"].(bool)
+	}
+
+	return getWallentInfo
+}
+//==========返回一个重要的地址=========//
+func (bc btcSer) ImportAddress(address string) string {
+	paramsSlice := []interface{}{address}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := PrepareJSON(IMPORTADDRESS, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	res, ok := rpcResult.Data.Result.(string)
+	if ok {
+		return res
+	}
+
+	return ""
+}
+//============返回标签列表=========//
+func (bc btcSer) ListLabels() string {
+	paramsSlice := []interface{}{}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := PrepareJSON(LISTLABELS, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := DoPost(RPCURL, RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	res, ok := rpcResult.Data.Result.(string)
+	if ok {
+		return res
+	}
+
+	return ""
+}
+
+

@@ -2,112 +2,129 @@ package entity
 
 //====================Apply Wallet============//
 //=============== begin:AbandontranSactionInfo ===============//
-type AbandontranSactionInfo struct {
+type AbandonTransactionInfo struct {
 }
+
 //=============== end:AbandontranSactionInfo ===============//
 
-//============中止重新扫描==========
+//=============== begin:AbortRescan ===============//
 type AbortRescan struct {
 }
-//==========添加多重账户地址===========
+//=============== end:AbortRescan ===============//
+
+//=============== begin:AddMultisgAddressInfo ===============//
 type AddMultisgAddressInfo struct {
-	Address string
+	Address      string
 	RedeemScript string
-	Descriptor string
+	Descriptor   string
 }
-//=============转至备份钱包==========///
+//=============== end:AddMultisgAddressInfo ===============//
 
-type  UpWallet struct {
+//=============== begin:UpWallet ===============//
 
+type UpWallet struct {
 }
-//============查询撞的费用==========//
+//=============== end:UpWallet ===============//
+//=============== begin:Bumpfee ===============//
 //!!!!!!!!!!!1
 type Bumpfee struct {
-	Psbt string
-	TxId string
+	Psbt    string
+	TxId    string
 	Origfee int64
-	Fee int64
-	Errors []string//json array类型
-	Str []string//可能为空
+	Fee     int64
+	Errors  []string //json array类型
+	Str     []string //可能为空
 }
-//=============创建钱包==============//
+//=============== end:Bumpfee ===============//
+//=============== begin:Createwallet ===============//
 type Createwallet struct {
-	Name string
+	Name    string
 	Warning string
 }
-//==============转储私钥============//
+//=============== end:Createwallet ===============//
+//=============== begin:Dumpprivkey ===============//
 type Dumpprivkey struct {
-	Str string  //The private key
+	Str string //The private key
 }
-//==============转储钱包============//
-type Dumpwallet struct {
-	Filename string
-}
-//===============加密钱包============//
-type EncyptWallet struct {
-	Passphrase string
-}
+//=============== end:Dumpprivkey ===============//
 //===============通过标签获取地址============//
-type Getaddressesbylabel struct {
-	Address string //!!!!!!(json object) json object with information about address
-	Purpose string
-}
-type Getaddressinfo struct {
-	Address string
-	ScriptPubKey string
-	Ismine bool
-	Solvable bool
-	Desc string
-	Iswatchonly bool
-	Isscript bool
-	Iswitness bool
-	Script string
-	Hex string
-	Pubkey string
-	Ischange bool
-	Timestamp int64
-	Hdkeypath string
-	Hdseedid string
-	Hdmasterfingerprint string
-	Labels	[]string
-	Embedded Embedded
-	Embedded_ map[string]interface{}
-}
-type Embedded struct {
+//type Label struct {
+//	Address  []Address
+//	Address_ map[string]interface{}
+//}
+//type Address struct {
+//	Purpose string
+//}
 
-	Isscript bool
-	Iswitness bool
-	Witness_version int64
+//=============== begin:AddressInfo ===============//
+type AddressInfo struct {
+	Address             string
+	ScriptPubKey        string
+	Ismine              bool
+	Solvable            bool
+	Desc                string
+	Iswatchonly         bool
+	Isscript            bool
+	Iswitness           bool
+	Hex                 string
+	Pubkey              string
+	Ischange            bool
+	Timestamp           float64
+	Hdkeypath           string
+	Hdseedid            string
+	Hdmasterfingerprint string
+	Labels              []string
+	Labels_             []interface{}
+	Embedded            Embedded
+	Embedded_           map[string]interface{}
+}
+
+type Embedded struct {
+	Isscript        bool
+	Iswitness       bool
+	Witness_version float64
 	Witness_program string
-	Pubkey string
-	Address string
-	ScriptPubKey string
+	Pubkey          string
+	Address         string
+	ScriptPubKey    string
 }
-//==============GetBalance==========//
-type Getbalance struct {
-	N     float64
-}
-//============end GetBalance=========//
-//==============begin:getbalances======//
-type Getbalances struct {
-	Mine Mine
-	Mine_  map[string]interface{}
-	Watchonly Watchonly
-	Watchonly_ map[string]interface{}
+//=============== end:AddressInfo ===============//
+
+//=============== begin:Balances ===============//
+type Balances struct {
+	Mine       Mine
+	Mine_      map[float64]interface{}
+	Watchonly  Watchonly
+	Watchonly_ map[float64]interface{}
 }
 type Mine struct {
-	Trusted float64
+	Trusted           float64
 	Untrusted_pending float64
-	Immature float64
-	Used float64
+	Immature          float64
+	Used              float64
 }
 type Watchonly struct {
-	Trusted float64
+	Trusted           float64
 	Untrusted_pending float64
-	Immature float64
+	Immature          float64
 }
-//========end: getbalances========//
 
-
-
-
+//=============== end:Balances ===============//
+//=============== begin:WalletInfo ===============//
+type WalletInfo struct {
+	Walletname              string
+	Balance                 float64
+	Unconfirmed_balance     float64
+	Keypoololdest           float64
+	Private_keys_enabled    bool
+	Hdseedid                string
+	Txcount                 float64
+	Keypoolsize             float64
+	Scanning                bool
+	Walletversion           float64
+	Immature_balance        float64
+	Keypoolsize_hd_internal float64
+	Paytxfee                float64
+	Avoid_reuse             bool
+}
+//=============== end:WalletInfo ===============//
