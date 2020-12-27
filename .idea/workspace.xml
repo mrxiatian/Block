@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fe09aad1-8983-4c20-aebc-34c7aa78a1eb" name="默认更改列表" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bitServices/bitServices.go" beforeDir="false" afterPath="$PROJECT_DIR$/bitServices/bitServices.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity/jkhkjhk.go" beforeDir="false" afterPath="$PROJECT_DIR$/entity/jkhkjhk.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/bitcoinServices.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/bitcoinServices.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/test.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entity/jkhkjhk.go" beforeDir="false" afterPath="$PROJECT_DIR$/entity/WalletDemo.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
